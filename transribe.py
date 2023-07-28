@@ -1,9 +1,8 @@
-import openai
+import whisper
 import docx
 import os
 
-API_KEY = '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'
-model = 'whisper-1'
+model = whisper.model('base')
 #specialized prompt for clarity
 personalPrompt = 'This is the audio lectures of a history class about US history from past to present.'
 
@@ -16,13 +15,10 @@ personalPrompt = 'This is the audio lectures of a history class about US history
 audio_file_folder = os.path.expanduser('~/HIST300_Audio_Lecture')
 transcripted_file_folder = os.path.expanduser('~/Code/WhisperProject/Transcripts')
 
-def transcribe(audio_file_path):
-    audio_file = open(audio_file_path, 'rb')
-    transcript = openai.Audio.transcribe(
-        api_key = API_KEY,
-        model = model, 
-        file = audio_file, 
-        prompt = personalPrompt)
+def audioTranscribe(audio_file_path):
+    audio_file = whisper.load_audio(audio_file_path)
+    options = whisper.DecodingOptions(language = 'en', prompt=personalPrompt, fp16 = False)
+    transcript = model.transcribe(audio_file, options, verbose = True)
     return transcript['text']
 
 def saveToDoc(transcript, transcripted_file_path):
@@ -37,7 +33,7 @@ if __name__ == "__main__":
         if(file.endswith('.mp3')):
             print(f'Transcribing {file}')
             audio_file_path = os.path.join(audio_file_folder, file)
-            transcript = transcribe(audio_file_path)
+            transcript = audioTranscribe(audio_file_path)
             # file[:-4] removes the .mp3 extension
             transcripted_file_path = os.path.join(transcripted_file_folder, 'Transcripted-' +  file[:-4] + '.docx')
             saveToDoc(transcript, transcripted_file_path)

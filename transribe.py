@@ -2,7 +2,7 @@ import whisper
 import docx
 import os
 
-model = whisper.load_model('base')
+model = whisper.load_model('base.en')
 #specialized prompt for clarity
 personalPrompt = 'This is the audio lectures of a history class about US history from past to present.'
 
@@ -13,7 +13,7 @@ personalPrompt = 'This is the audio lectures of a history class about US history
 ###
 # os.path.expanduser treats ~ as the home directory
 audio_file_folder = os.path.expanduser('~/HIST300_Audio_Lecture')
-transcripted_file_folder = os.path.expanduser('~/Code/WhisperProject/Transcripts')
+transcripted_file_folder = os.path.expanduser('~/Code/WhisperGPT/Transcripts')
 
 def audioTranscribe(audio_file_path):
     audio_file = whisper.load_audio(audio_file_path)

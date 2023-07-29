@@ -2,7 +2,7 @@ import whisper
 import docx
 import os
 
-model = whisper.model('base')
+model = whisper.load_model('base')
 #specialized prompt for clarity
 personalPrompt = 'This is the audio lectures of a history class about US history from past to present.'
 

@@ -17,8 +17,7 @@ transcripted_file_folder = os.path.expanduser('~/Code/WhisperProject/Transcripts
 
 def audioTranscribe(audio_file_path):
     audio_file = whisper.load_audio(audio_file_path)
-    options = whisper.DecodingOptions(language = 'en', prompt=personalPrompt, fp16 = False)
-    transcript = model.transcribe(audio_file, options, verbose = True)
+    transcript = model.transcribe(audio_file, verbose = True, initial_prompt=personalPrompt, fp16 = False)
     return transcript['text']
 
 def saveToDoc(transcript, transcripted_file_path):

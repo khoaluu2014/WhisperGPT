@@ -5,7 +5,6 @@ import os
 model = whisper.load_model('base.en')
 #specialized prompt for clarity
 personalPrompt = 'This is the audio lectures of a history class about US history from past to present.'
-
 ###
 #   This script is used to transcribe audio files into text files
 #   The audio files are stored in ~/HIST300_Audio_Lecture
@@ -17,7 +16,7 @@ transcripted_file_folder = os.path.expanduser('~/Code/WhisperGPT/Transcripts')
 
 def audioTranscribe(audio_file_path):
     audio_file = whisper.load_audio(audio_file_path)
-    transcript = model.transcribe(audio_file, verbose = True, initial_prompt=personalPrompt, fp16 = False)
+    transcript = model.transcribe(audio_file, verbose = True, initial_prompt=personalPrompt, fp16 = True)
     return transcript['text']
 
 def saveToDoc(transcript, transcripted_file_path):

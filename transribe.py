@@ -21,9 +21,6 @@ def audioTranscribe(audio_file_path):
     return transcript
 
 def saveAsTxt(transcript, transcripted_file_path, audio_file_path):
-    # doc = docx.Document()
-    # doc.add_paragraph(transcript)
-    # doc.save(transcripted_file_path)
     txt_writer = get_writer('txt', transcripted_file_path)
     txt_writer(transcript, audio_file_path)
 
@@ -35,7 +32,5 @@ if __name__ == "__main__":
             print(f'Transcribing {file}')
             audio_file_path = os.path.join(audio_file_folder, file)
             transcript = audioTranscribe(audio_file_path)
-            # file[:-4] removes the .mp3 extension
-            #transcripted_file_path = os.path.join(transcripted_file_folder, 'Transcripted-' +  file[:-4] + '.docx')
             saveAsTxt(transcript, transcripted_file_folder, audio_file_path)
             print(f'Saved to {transcripted_file_folder}')

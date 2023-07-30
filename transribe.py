@@ -1,4 +1,5 @@
 import whisper
+from whisper.utils import get_writer
 import docx
 import os
 
@@ -17,12 +18,14 @@ transcripted_file_folder = os.path.expanduser('~/Code/WhisperGPT/Transcripts')
 def audioTranscribe(audio_file_path):
     audio_file = whisper.load_audio(audio_file_path)
     transcript = model.transcribe(audio_file, verbose = True, initial_prompt=personalPrompt, fp16 = True)
-    return transcript['text']
+    return transcript
 
-def saveToDoc(transcript, transcripted_file_path):
-    doc = docx.Document()
-    doc.add_paragraph(transcript)
-    doc.save(transcripted_file_path)
+def saveAsTxt(transcript, transcripted_file_path, audio_file_path):
+    # doc = docx.Document()
+    # doc.add_paragraph(transcript)
+    # doc.save(transcripted_file_path)
+    txt_writer = get_writer('txt', transcripted_file_path)
+    txt_writer(transcript, audio_file_path)
 
 
 if __name__ == "__main__":
@@ -33,6 +36,6 @@ if __name__ == "__main__":
             audio_file_path = os.path.join(audio_file_folder, file)
             transcript = audioTranscribe(audio_file_path)
             # file[:-4] removes the .mp3 extension
-            transcripted_file_path = os.path.join(transcripted_file_folder, 'Transcripted-' +  file[:-4] + '.docx')
-            saveToDoc(transcript, transcripted_file_path)
-            print(f'Saved to {transcripted_file_path}')
+            #transcripted_file_path = os.path.join(transcripted_file_folder, 'Transcripted-' +  file[:-4] + '.docx')
+            saveAsTxt(transcript, transcripted_file_folder, audio_file_path)
+            print(f'Saved to {transcripted_file_folder}')

@@ -24,7 +24,6 @@ def saveAsTxt(transcript, transcripted_file_path, audio_file_path):
     txt_writer = get_writer('txt', transcripted_file_path)
     txt_writer(transcript, audio_file_path)
 
-
 if __name__ == "__main__":
     audio_files = os.listdir(audio_file_folder)
     for file in audio_files:
